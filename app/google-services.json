@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "26534349613",
+    "project_id": "mydietapp-449713",
+    "storage_bucket": "mydietapp-449713.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26534349613:android:cf18d190db1c71fb00e1a4",
+        "android_client_info": {
+          "package_name": "leopardcat.studio.mydietapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0mdc2-3tEJhXk68wO5No6olK2Pp9htl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package leopardcat.studio.mydietapp.ui.intro.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,8 +33,13 @@ import androidx.compose.ui.unit.sp
 import leopardcat.studio.mydietapp.R
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLogin : (String, String) -> Unit,
+    onSignUp : (String, String) -> Unit,
+    errorMessage : String?
+) {
 
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -105,8 +112,26 @@ fun LoginScreen() {
 
         }
 
+        errorMessage?.let {
+            Text(
+                text = it,
+                color = Color.Red,
+                modifier = Modifier.padding(10.dp),
+                fontSize = 16.sp
+            )
+        }
+
         Button(
-            onClick = { },
+            onClick = {
+                if(email.isEmpty() || password.isEmpty())
+                {
+                    Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    onLogin(email, password)
+                }
+            },
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, top = 10.dp),
             colors = ButtonDefaults.buttonColors(
@@ -122,7 +147,16 @@ fun LoginScreen() {
         }
 
         Button(
-            onClick = { },
+            onClick = {
+                if(email.isEmpty() || password.isEmpty())
+                {
+                    Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    onSignUp(email, password)
+                }
+            },
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, top = 10.dp),
             colors = ButtonDefaults.buttonColors(
@@ -143,5 +177,9 @@ fun LoginScreen() {
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(
+        onLogin = {_, _ -> },
+        onSignUp = {_, _ -> },
+        errorMessage = null
+    )
 }
