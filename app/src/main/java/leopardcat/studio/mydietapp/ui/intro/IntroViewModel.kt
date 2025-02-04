@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import leopardcat.studio.mydietapp.repository.FirebaseRepository
 
 class IntroViewModel: ViewModel() {
 
@@ -21,38 +22,28 @@ class IntroViewModel: ViewModel() {
 
     // 회원가입
     fun signUp(email: String, password : String) {
-
         viewModelScope.launch {
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _authState.value = auth.currentUser
-                    } else {
-                        _errorState.value = task.exception?.message
-                    }
-                }
-
+            try {
+                val user = FirebaseRepository.signUp(email, password)
+                _authState.value = user
+                _errorState.value = null
+            } catch (e: Exception) {
+                _errorState.value = e.message
+            }
         }
-
     }
 
 
     // 로그인
     fun signIn(email: String, password : String) {
-
         viewModelScope.launch {
-
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _authState.value = auth.currentUser
-                    } else {
-                        _errorState.value = task.exception?.message
-                    }
-                }
-
+            try {
+                val user = FirebaseRepository.signIn(email, password)
+                _authState.value = user
+                _errorState.value = null
+            } catch (e: Exception) {
+                _errorState.value = e.message
+            }
         }
-
     }
 }
