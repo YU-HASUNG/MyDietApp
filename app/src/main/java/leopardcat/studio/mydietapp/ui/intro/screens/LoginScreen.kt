@@ -31,6 +31,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import leopardcat.studio.mydietapp.R
+import leopardcat.studio.mydietapp.ui.intro.components.CustomButton
+import leopardcat.studio.mydietapp.ui.intro.components.CustomTextField
 
 @Composable
 fun LoginScreen(
@@ -59,58 +61,18 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(100.dp))
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-                .background(Color.LightGray, RoundedCornerShape(8.dp))
-                .padding(16.dp)
-        ) {
+        CustomTextField(
+            value = email,
+            onValueChange = { email = it },
+            placeholder = "email"
+        )
 
-            if(email.isEmpty()) {
-                Text(
-                    text = "Email",
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 16.sp)
-                )
-            }
-
-            BasicTextField(
-                value = email,
-                onValueChange = { email = it },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                textStyle = TextStyle(color = Color.Black, fontSize = 16.sp)
-            )
-
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-                .background(Color.LightGray, RoundedCornerShape(8.dp))
-                .padding(16.dp)
-        ) {
-
-            if(password.isEmpty()) {
-                Text(
-                    text = "password",
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 16.sp)
-                )
-            }
-
-            BasicTextField(
-                value = password,
-                onValueChange = { password = it },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                visualTransformation = PasswordVisualTransformation()
-            )
-
-        }
+        CustomTextField(
+            value = password,
+            onValueChange = { password = it },
+            placeholder = "password",
+            isPassword = true
+        )
 
         errorMessage?.let {
             Text(
@@ -121,7 +83,8 @@ fun LoginScreen(
             )
         }
 
-        Button(
+        CustomButton(
+            text = "Login",
             onClick = {
                 if(email.isEmpty() || password.isEmpty())
                 {
@@ -131,22 +94,13 @@ fun LoginScreen(
                 {
                     onLogin(email, password)
                 }
+
             },
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, top = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Blue,
-            )
-        ) {
+            backgroundColor = Color.Blue
+        )
 
-            Text(
-                text = "Login",
-                color = Color.White
-            )
-
-        }
-
-        Button(
+        CustomButton(
+            text = "Sign Up",
             onClick = {
                 if(email.isEmpty() || password.isEmpty())
                 {
@@ -157,19 +111,10 @@ fun LoginScreen(
                     onSignUp(email, password)
                 }
             },
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, top = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.DarkGray,
-            )
-        ) {
+            backgroundColor = Color.DarkGray
+        )
 
-            Text(
-                text = "Sign Up",
-                color = Color.White
-            )
 
-        }
     }
 
 }
