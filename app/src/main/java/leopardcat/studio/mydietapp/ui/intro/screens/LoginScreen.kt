@@ -25,14 +25,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import leopardcat.studio.mydietapp.R
-import leopardcat.studio.mydietapp.ui.intro.components.CustomButton
-import leopardcat.studio.mydietapp.ui.intro.components.CustomTextField
+import leopardcat.studio.mydietapp.ui.components.CustomButton
+import leopardcat.studio.mydietapp.ui.components.CustomTextField
 
 @Composable
 fun LoginScreen(
