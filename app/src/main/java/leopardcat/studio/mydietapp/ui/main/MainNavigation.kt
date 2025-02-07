@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import leopardcat.studio.mydietapp.R
+import leopardcat.studio.mydietapp.ui.common.DietAppScreen
 
 @Composable
 fun MainNavigation(
@@ -73,12 +74,6 @@ fun MainNavigation(
             }
         }
     }
-}
-
-enum class DietAppScreen(val icon: Int) {
-    Home(R.drawable.tab1_icon),
-    Diet(R.drawable.tab2_icon),
-    Profile(R.drawable.tab3_icon)
 }
 
 @Preview

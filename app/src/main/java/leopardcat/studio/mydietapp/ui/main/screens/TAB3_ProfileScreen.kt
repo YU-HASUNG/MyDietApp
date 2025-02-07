@@ -6,13 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import leopardcat.studio.mydietapp.ui.common.Screen
 import leopardcat.studio.mydietapp.ui.profile.ProfileEditScreen
 import leopardcat.studio.mydietapp.ui.profile.ProfileInfoScreen
-
-enum class Screen {
-    ProfileInfo,
-    ProfileEdit
-}
 
 @Composable
 fun ProfileScreen() {

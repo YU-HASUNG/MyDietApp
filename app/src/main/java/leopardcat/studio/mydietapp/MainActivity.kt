@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import leopardcat.studio.mydietapp.ui.main.DietAppScreen
+import leopardcat.studio.mydietapp.ui.common.DietAppScreen
 import leopardcat.studio.mydietapp.ui.main.MainNavigation
 import leopardcat.studio.mydietapp.ui.main.screens.DietScreen
 import leopardcat.studio.mydietapp.ui.main.screens.HomeScreen
