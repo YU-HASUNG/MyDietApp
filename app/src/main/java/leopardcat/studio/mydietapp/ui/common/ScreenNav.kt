@@ -14,3 +14,9 @@ enum class Screen {
     ProfileInfo,
     ProfileEdit
 }
+
+// 다이어트 기록 스크린들
+enum class DietRecordScreens {
+    DietRecordInfo,
+    DietRecordAdd
+}
