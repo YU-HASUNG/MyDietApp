@@ -24,6 +24,9 @@ import leopardcat.studio.mydietapp.ui.main.screens.ProfileScreen
 import leopardcat.studio.mydietapp.ui.theme.MyDietAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel = MainViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -44,7 +47,7 @@ class MainActivity : ComponentActivity() {
                         when(currentScreen) {
                             DietAppScreen.Home -> HomeScreen()
                             DietAppScreen.Diet -> DietScreen()
-                            DietAppScreen.Profile -> ProfileScreen()
+                            DietAppScreen.Profile -> ProfileScreen(mainViewModel = mainViewModel)
                         }
                     }
                 }
