@@ -1,5 +1,6 @@
 package leopardcat.studio.mydietapp.ui.dietRecode
 
+import android.content.Intent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -20,6 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,24 +32,31 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import leopardcat.studio.mydietapp.MainViewModel
 import leopardcat.studio.mydietapp.model.Exercise
 import leopardcat.studio.mydietapp.ui.components.AnimatedText
+import leopardcat.studio.mydietapp.ui.dietRecode.dietRecodeInfo.DietRecodeInfoActivity
 
 @Composable
-fun DietRecodeListScreen(onAddClicked: () -> Unit) {
+fun DietRecodeListScreen(
+    mainViewModel: MainViewModel,
+    onAddClicked: () -> Unit
+) {
+
+    val exerciseList by mainViewModel.exerciseRecords.collectAsState()
+
+    LaunchedEffect(Unit) {
+        mainViewModel.loadExercises()
+    }
 
     val targetCalories = 1500
-    val consumedCalories = 300
-
-    val exerciseList = listOf(
-        Exercise(name = "Running", duration = 30, calorie = 200),
-        Exercise(name = "Cycling", duration = 45, calorie = 300),
-    )
+    val consumedCalories = exerciseList.sumOf { it.calorie }
 
     Box(
         modifier = Modifier
@@ -81,7 +91,7 @@ fun DietRecodeListScreen(onAddClicked: () -> Unit) {
             Box(contentAlignment = Alignment.Center) {
 
                 AnimatedCircularProgressBar(
-                    consumedCalories = 300,
+                    consumedCalories = consumedCalories,
                     targetCalories = 1500,
                     modifier = Modifier.size(200.dp),
                     strokeWidth = 20.dp
@@ -134,11 +144,22 @@ fun DietRecodeListScreen(onAddClicked: () -> Unit) {
 @Composable
 fun ExerciseRow(exercise: Exercise) {
 
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
             .background(Color(0xFF500371), shape = RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .clickable {
+                val intent = Intent(context, DietRecodeInfoActivity::class.java)
+                intent.putExtra("docId", exercise.docId)
+                intent.putExtra("name", exercise.name)
+                intent.putExtra("duration", exercise.duration)
+                intent.putExtra("calorie", exercise.calorie)
+                context.startActivity(intent)
+            }
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -179,7 +200,7 @@ fun AnimatedCircularProgressBar(
 
     val animatedProgress = remember { Animatable(0f) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(consumedCalories) {
         animatedProgress.animateTo(
             targetValue = consumedCalories.toFloat() / targetCalories,
             animationSpec = tween(durationMillis = 1000)

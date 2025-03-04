@@ -5,23 +5,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import leopardcat.studio.mydietapp.MainViewModel
 import leopardcat.studio.mydietapp.ui.common.DietRecordScreens
 import leopardcat.studio.mydietapp.ui.dietRecode.DietRecodeInputScreen
 import leopardcat.studio.mydietapp.ui.dietRecode.DietRecodeListScreen
 
 @Composable
-fun DietScreen() {
+fun DietScreen(
+    mainViewModel: MainViewModel
+) {
 
      var currentScreen by rememberSaveable { mutableStateOf(DietRecordScreens.DietRecordInfo) }
 
     when(currentScreen) {
         DietRecordScreens.DietRecordInfo -> {
-            DietRecodeListScreen(onAddClicked = {
-                currentScreen = DietRecordScreens.DietRecordAdd
-            })
+            DietRecodeListScreen(
+                mainViewModel,
+                onAddClicked = {
+                    currentScreen = DietRecordScreens.DietRecordAdd
+                }
+            )
         }
         DietRecordScreens.DietRecordAdd -> {
             DietRecodeInputScreen(
+                mainViewModel,
                 onSaveClicked = {
                     currentScreen = DietRecordScreens.DietRecordInfo
                 },

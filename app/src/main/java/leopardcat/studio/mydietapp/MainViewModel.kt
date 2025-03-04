@@ -1,8 +1,12 @@
 package leopardcat.studio.mydietapp
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import leopardcat.studio.mydietapp.model.Exercise
 import leopardcat.studio.mydietapp.repository.FirebaseRepository
 
 class MainViewModel : ViewModel() {
@@ -19,6 +23,9 @@ class MainViewModel : ViewModel() {
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage : StateFlow<String?> = _errorMessage
+
+    private val _exerciseRecords = MutableStateFlow<List<Exercise>>(emptyList())
+    val exerciseRecords : StateFlow<List<Exercise>> = _exerciseRecords
 
     init {
         loadProfile()
@@ -55,5 +62,18 @@ class MainViewModel : ViewModel() {
         _errorMessage.value = null
     }
 
+    fun saveExerciseRecord(exercise: Exercise) {
+        viewModelScope.launch(Dispatchers.IO) {
+            FirebaseRepository.createExercise(exercise)
+        }
+
+    }
+
+    fun loadExercises(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val exercises = FirebaseRepository.readExercises()
+            _exerciseRecords.value = exercises
+        }
+    }
 
 }

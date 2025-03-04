@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         when(currentScreen) {
                             DietAppScreen.Home -> HomeScreen()
-                            DietAppScreen.Diet -> DietScreen()
+                            DietAppScreen.Diet -> DietScreen(mainViewModel = mainViewModel)
                             DietAppScreen.Profile -> ProfileScreen(mainViewModel = mainViewModel)
                         }
                     }
@@ -63,5 +63,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        mainViewModel.loadExercises()
     }
 }
